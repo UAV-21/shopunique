@@ -62,32 +62,33 @@ exports.registerUser = async (params) => {
           reject({
             message: "Email address is in use, please try a different one",
             statusCode: 400,
-            });
-            } else if (result.length === 0) {
+          });
+        } else if (result.length === 0) {
           let values = [fullName, email, hashedPassword];
           if (role !== undefined) {
             values.push(role);
           }
-          let sql = `INSERT INTO users (fname, email, password${role !== undefined ? ', role' : ''}) VALUES (?,?,?${role !== undefined ? ',?' : ''})`;
-          
-          db.query(sql,values,(err, result) => {
-              if (err) {
-                reject({
-                  message: "Something went wrong, please try again",
-                  statusCode: 400,
-                  data: err,
-                });
-              } else {
-                const token = jwt.sign({ data: result }, "secret");
-                resolve({
-                  data: result,
-                  message: "You have successfully registered.",
-                  token: token,
-                  statusCode: 200,
-                });
-              }
+          let sql = `INSERT INTO users (fname, email, password${
+            role !== undefined ? ", role" : ""
+          }) VALUES (?,?,?${role !== undefined ? ",?" : ""})`;
+
+          db.query(sql, values, (err, result) => {
+            if (err) {
+              reject({
+                message: "Something went wrong, please try again",
+                statusCode: 400,
+                data: err,
+              });
+            } else {
+              const token = jwt.sign({ data: result }, "secret");
+              resolve({
+                data: result,
+                message: "You have successfully registered.",
+                token: token,
+                statusCode: 200,
+              });
             }
-          );
+          });
         }
       }
     );

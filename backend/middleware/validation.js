@@ -39,8 +39,22 @@ const updateUserValidation = (data) => {
   return schema.validate(data, options);
 };
 
+const createProductValidation = (data) => {
+  const schema = Joi.object({
+    cat_id: Joi.number().required().strict(),
+    title: Joi.string().required(),
+    image: Joi.string().required(),
+    description: Joi.string().required(),
+    price: Joi.number().precision(2).max(99999.99).strict().required(),
+    quantity: Joi.number().max(1200).strict().required(),
+    short_desc: Joi.string().required()
+  });
+
+  return schema.validate(data, options)
+}
 module.exports = {
   registerValidation,
   loginValidation,
   updateUserValidation,
+  createProductValidation
 };

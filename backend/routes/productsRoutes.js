@@ -3,9 +3,14 @@ const router = express.Router();
 const productController = require("../controllers/productController");
 const db = require("../database/db");
 
-router.get("/",productController.all_products);
-router.get("/:productId",productController.single_product);
 // GET ALL PRODUCTS
+router.get("/",productController.all_products);
+
+// GET SINGLE PRODUCT BY ID
+router.get("/:productId",productController.single_product);
+
+// Create Product
+router.post("/", productController.create_product);
 // router.get("/", async (req, res) => {
 //   const { page = 1, limit = 10 } = req.query;
 
