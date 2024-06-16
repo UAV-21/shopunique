@@ -6,6 +6,7 @@ const {
   deleteProduct,
 } = require("../services/productServices");
 
+
 // Get all products
 exports.all_products = async (req, res, next) => {
   const { page = 1, limit = 10 } = req.query;
@@ -24,8 +25,8 @@ exports.all_products = async (req, res, next) => {
 
 // Get Single Product
 exports.single_product = async (req, res, next) => {
+  // console.log(req.user.user)
   const { productId } = req.params;
-  console.log(typeof productId);
   singleProduct({ productId })
     .then((result) => {
       const { statusCode = 200, message, data } = result;

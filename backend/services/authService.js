@@ -34,11 +34,12 @@ exports.loginUser = async (params) => {
         }
 
         if (result.length > 0) {
-          const token = jwt.sign({ data: result }, "secret");
+          // const token = jwt.sign({ data: result }, "secret");
+            // const token = getJwtToken(result)
           resolve({
             message: "Logged in successfully",
             data: result,
-            token,
+            
           });
         }
       }

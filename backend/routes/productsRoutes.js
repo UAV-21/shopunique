@@ -2,12 +2,13 @@ const express = require("express");
 const router = express.Router();
 const productController = require("../controllers/productController");
 const db = require("../database/db");
+const { isAuthenticatedUser } = require("../middleware/authValidator");
 
 // GET ALL PRODUCTS
 router.get("/",productController.all_products);
 
 // GET SINGLE PRODUCT BY ID
-router.get("/:productId",productController.single_product);
+router.get("/:productId", isAuthenticatedUser, productController.single_product);
 
 // Create Product
 router.post("/", productController.create_product);
