@@ -4,6 +4,7 @@ const path = require("path");
 const logger = require("morgan");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
+const errorMiddleware = require("./middleware/error");
 
 // Config .env file
 dotenv.config({
@@ -23,11 +24,17 @@ app.use(cookieParser());
 // Router index
 const indexRouter = require("./routes/index");
 app.use("/", indexRouter);
+app.all("*", () => {
+  throw new Error("Invalid url...");
+});
 
 // Health check
 app.get("/", (req, res) => {
   res.status(200).send("Health Check");
 });
+
+// Middleware for Errors
+app.use(errorMiddleware);
 
 const PORT = process.env.PORT || 5000;
 const ENV = process.env.NODE_ENV || null;
