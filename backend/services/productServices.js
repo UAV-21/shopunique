@@ -25,7 +25,6 @@ exports.allProducts = async (params) => {
     db.query(sql, (err, result) => {
       if (err) {
         reject({
-          status: false,
           message: "Something went wrong, please try again",
           data: err,
           statusCode: 400,
@@ -33,11 +32,15 @@ exports.allProducts = async (params) => {
       }
       if (result.length > 0) {
         resolve({
-          status: true,
           message: "product found successfully",
           data: result,
         });
       }
+      reject({
+        message: "No Data Found",
+        data: err,
+        statusCode: 404,
+      });
     });
   });
 };
@@ -51,7 +54,6 @@ exports.singleProduct = async (params) => {
     db.query(sql, (err, result) => {
       if (err) {
         reject({
-          status: false,
           message: "Something went wrong, please try again",
           data: err,
           statusCode: 400,
@@ -59,11 +61,14 @@ exports.singleProduct = async (params) => {
       }
       if (result.length > 0) {
         resolve({
-          status: true,
           message: "product found successfully",
           data: result,
         });
       }
+        reject({
+          message: "No Data Found",
+          statusCode: 404,
+        });
     });
   });
 };
